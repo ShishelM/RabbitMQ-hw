@@ -8,7 +8,8 @@
 Добавьте management plug-in и зайдите в веб-интерфейс.
 
 *Итогом выполнения домашнего задания будет приложенный скриншот веб-интерфейса RabbitMQ.*
-![0](image.png)
+
+![0](/img/image.png)
 
 ---
 
@@ -28,8 +29,10 @@ $ pip install pika
 После чего запустите второй скрипт consumer.py и сделайте скриншот результата выполнения скрипта
 
 *В качестве решения домашнего задания приложите оба скриншота, сделанных на этапе выполнения.*
-![1](image-1.png)
-![2](image-2.png)
+
+![1](/img/image-1.png)
+
+![2](/img/image-2.png)
 
 Для закрепления материала можете попробовать модифицировать скрипты, чтобы поменять название очереди и отправляемое сообщение.
 
@@ -51,45 +54,48 @@ $ cat /etc/hosts
 Затем объедините две машины в кластер и создайте политику ha-all на все очереди.
 
 *В качестве решения домашнего задания приложите скриншоты из веб-интерфейса с информацией о доступных нодах в кластере и включённой политикой.*
-![3](image-3.png)
+
+![3](/img/image-3.png)
+
 Также приложите вывод команды с двух нод:
 
 ```shell script
 $ rabbitmqctl cluster_status
 ```
+
 1 нода:
 ```
-(venv) pavel@ubuntu-24:~/hw/RabbitMQ-hw$ docker exec -it rabbitmq1 rabbitmqctl cluster_status
-Cluster status of node rabbit@rabbit1 ...
+pavel@ubuntu-24:~/hw/RabbitMQ-hw$ docker exec -it rmq01 rabbitmqctl cluster_status
+Cluster status of node rabbit@rmq01 ...
 Basics
 
-Cluster name: rabbit@rabbit1
+Cluster name: rabbit@rmq01
 Total CPU cores available cluster-wide: 3
 
 Disk Nodes
 
-rabbit@rabbit1
-rabbit@rabbit2
+rabbit@rmq01
+rabbit@rmq02
 
 Running Nodes
 
-rabbit@rabbit1
-rabbit@rabbit2
+rabbit@rmq01
+rabbit@rmq02
 
 Versions
 
-rabbit@rabbit1: RabbitMQ 3.13.7 on Erlang 26.2.5.16
-rabbit@rabbit2: RabbitMQ 3.13.7 on Erlang 26.2.5.16
+rabbit@rmq01: RabbitMQ 3.13.7 on Erlang 26.2.5.16
+rabbit@rmq02: RabbitMQ 3.13.7 on Erlang 26.2.5.16
 
 CPU Cores
 
-Node: rabbit@rabbit1, available CPU cores: 2
-Node: rabbit@rabbit2, available CPU cores: 1
+Node: rabbit@rmq01, available CPU cores: 2
+Node: rabbit@rmq02, available CPU cores: 1
 
 Maintenance status
 
-Node: rabbit@rabbit1, status: not under maintenance
-Node: rabbit@rabbit2, status: not under maintenance
+Node: rabbit@rmq01, status: not under maintenance
+Node: rabbit@rmq02, status: not under maintenance
 
 Alarms
 
@@ -101,14 +107,14 @@ Network Partitions
 
 Listeners
 
-Node: rabbit@rabbit1, interface: [::], port: 15672, protocol: http, purpose: HTTP API
-Node: rabbit@rabbit1, interface: [::], port: 15692, protocol: http/prometheus, purpose: Prometheus exporter API over HTTP
-Node: rabbit@rabbit1, interface: [::], port: 25672, protocol: clustering, purpose: inter-node and CLI tool communication
-Node: rabbit@rabbit1, interface: [::], port: 5672, protocol: amqp, purpose: AMQP 0-9-1 and AMQP 1.0
-Node: rabbit@rabbit2, interface: [::], port: 15672, protocol: http, purpose: HTTP API
-Node: rabbit@rabbit2, interface: [::], port: 15692, protocol: http/prometheus, purpose: Prometheus exporter API over HTTP
-Node: rabbit@rabbit2, interface: [::], port: 25672, protocol: clustering, purpose: inter-node and CLI tool communication
-Node: rabbit@rabbit2, interface: [::], port: 5672, protocol: amqp, purpose: AMQP 0-9-1 and AMQP 1.0
+Node: rabbit@rmq01, interface: [::], port: 15672, protocol: http, purpose: HTTP API
+Node: rabbit@rmq01, interface: [::], port: 15692, protocol: http/prometheus, purpose: Prometheus exporter API over HTTP
+Node: rabbit@rmq01, interface: [::], port: 25672, protocol: clustering, purpose: inter-node and CLI tool communication
+Node: rabbit@rmq01, interface: [::], port: 5672, protocol: amqp, purpose: AMQP 0-9-1 and AMQP 1.0
+Node: rabbit@rmq02, interface: [::], port: 15672, protocol: http, purpose: HTTP API
+Node: rabbit@rmq02, interface: [::], port: 15692, protocol: http/prometheus, purpose: Prometheus exporter API over HTTP
+Node: rabbit@rmq02, interface: [::], port: 25672, protocol: clustering, purpose: inter-node and CLI tool communication
+Node: rabbit@rmq02, interface: [::], port: 5672, protocol: amqp, purpose: AMQP 0-9-1 and AMQP 1.0
 
 Feature flags
 
@@ -136,42 +142,43 @@ Flag: stream_update_config_command, state: enabled
 Flag: tracking_records_in_ets, state: enabled
 Flag: user_limits, state: enabled
 Flag: virtual_host_metadata, state: enabled
-(venv) pavel@ubuntu-24:~/hw/RabbitMQ-hw$ 
 ```
+
+![5](/img/image-5.png)
 
 2 нода:
 ```
-pavel@web-1:~/RabbitMQ$ docker exec -it rabbitmq2 rabbitmqctl cluster_status
-Cluster status of node rabbit@rabbit2 ...
+pavel@web-1:~/RabbitMQ$ docker exec -it rmq02 rabbitmqctl cluster_status
+Cluster status of node rabbit@rmq02 ...
 Basics
 
-Cluster name: rabbit@rabbit2
+Cluster name: rabbit@rmq02
 Total CPU cores available cluster-wide: 3
 
 Disk Nodes
 
-rabbit@rabbit1
-rabbit@rabbit2
+rabbit@rmq01
+rabbit@rmq02
 
 Running Nodes
 
-rabbit@rabbit1
-rabbit@rabbit2
+rabbit@rmq01
+rabbit@rmq02
 
 Versions
 
-rabbit@rabbit2: RabbitMQ 3.13.7 on Erlang 26.2.5.16
-rabbit@rabbit1: RabbitMQ 3.13.7 on Erlang 26.2.5.16
+rabbit@rmq02: RabbitMQ 3.13.7 on Erlang 26.2.5.16
+rabbit@rmq01: RabbitMQ 3.13.7 on Erlang 26.2.5.16
 
 CPU Cores
 
-Node: rabbit@rabbit2, available CPU cores: 1
-Node: rabbit@rabbit1, available CPU cores: 2
+Node: rabbit@rmq02, available CPU cores: 1
+Node: rabbit@rmq01, available CPU cores: 2
 
 Maintenance status
 
-Node: rabbit@rabbit2, status: not under maintenance
-Node: rabbit@rabbit1, status: not under maintenance
+Node: rabbit@rmq02, status: not under maintenance
+Node: rabbit@rmq01, status: not under maintenance
 
 Alarms
 
@@ -183,14 +190,14 @@ Network Partitions
 
 Listeners
 
-Node: rabbit@rabbit2, interface: [::], port: 15672, protocol: http, purpose: HTTP API
-Node: rabbit@rabbit2, interface: [::], port: 15692, protocol: http/prometheus, purpose: Prometheus exporter API over HTTP
-Node: rabbit@rabbit2, interface: [::], port: 25672, protocol: clustering, purpose: inter-node and CLI tool communication
-Node: rabbit@rabbit2, interface: [::], port: 5672, protocol: amqp, purpose: AMQP 0-9-1 and AMQP 1.0
-Node: rabbit@rabbit1, interface: [::], port: 15672, protocol: http, purpose: HTTP API
-Node: rabbit@rabbit1, interface: [::], port: 15692, protocol: http/prometheus, purpose: Prometheus exporter API over HTTP
-Node: rabbit@rabbit1, interface: [::], port: 25672, protocol: clustering, purpose: inter-node and CLI tool communication
-Node: rabbit@rabbit1, interface: [::], port: 5672, protocol: amqp, purpose: AMQP 0-9-1 and AMQP 1.0
+Node: rabbit@rmq02, interface: [::], port: 15672, protocol: http, purpose: HTTP API
+Node: rabbit@rmq02, interface: [::], port: 15692, protocol: http/prometheus, purpose: Prometheus exporter API over HTTP
+Node: rabbit@rmq02, interface: [::], port: 25672, protocol: clustering, purpose: inter-node and CLI tool communication
+Node: rabbit@rmq02, interface: [::], port: 5672, protocol: amqp, purpose: AMQP 0-9-1 and AMQP 1.0
+Node: rabbit@rmq01, interface: [::], port: 15672, protocol: http, purpose: HTTP API
+Node: rabbit@rmq01, interface: [::], port: 15692, protocol: http/prometheus, purpose: Prometheus exporter API over HTTP
+Node: rabbit@rmq01, interface: [::], port: 25672, protocol: clustering, purpose: inter-node and CLI tool communication
+Node: rabbit@rmq01, interface: [::], port: 5672, protocol: amqp, purpose: AMQP 0-9-1 and AMQP 1.0
 
 Feature flags
 
@@ -218,8 +225,9 @@ Flag: stream_update_config_command, state: enabled
 Flag: tracking_records_in_ets, state: enabled
 Flag: user_limits, state: enabled
 Flag: virtual_host_metadata, state: enabled
-pavel@web-1:~/RabbitMQ$ 
 ```
+
+![4](/img/image-4.png)
 
 Для закрепления материала снова запустите скрипт producer.py и приложите скриншот выполнения команды на каждой из нод:
 
@@ -227,10 +235,23 @@ pavel@web-1:~/RabbitMQ$
 $ rabbitmqadmin get queue='hello'
 ```
 
+![6](/img/image-6.png)
+
+![7](/img/image-7.png)
+
 После чего попробуйте отключить одну из нод, желательно ту, к которой подключались из скрипта, затем поправьте параметры подключения в скрипте consumer.py на вторую ноду и запустите его.
 
 *Приложите скриншот результата работы второго скрипта.*
 
+![8](/img/image-8.png)
+
+![9](/img/image-9.png)
+
+```
+Немного модифицировал скрипт для удобства
+```
+
+![10](/img/image-10.png)
 
 ## Дополнительные задания (со звёздочкой*)
 Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
